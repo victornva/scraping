@@ -32,10 +32,18 @@ class Book24ruSpider(scrapy.Spider):
         price = response.xpath("//div/b[@itemprop='price']/text()").extract()
         fake_price = response.xpath("//div/b[@itemprop='price']/text()").extract()
         rate = response.xpath("//div/span[@class='rating__rate-value']/text()").extract()
+
+        try:
+            p = float(price[0])
+        except:
+            p = 0
+        try:
+            fp = float(fake_price[0])
+        except:
+            fp = 0
         try:
             r = float(rate[0].replace(',', '.'))
         except:
             r = 0
 
-        yield BookparserItem(href=href, title=title[0], authors=authors[0],
-                             price=float(price[0]), fake_price=float(fake_price[0]), rate=r)
+        yield BookparserItem(href=href, title=title[0], authors=authors[0], price=p, fake_price=fp, rate=r)

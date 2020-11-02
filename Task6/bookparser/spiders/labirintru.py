@@ -22,9 +22,21 @@ class LabirintruSpider(scrapy.Spider):
         href = response.url
         title = response.xpath("//div[@id='product-info']/@data-name").extract()
         authors = response.xpath("//div/a[@data-event-label='author']/text()").extract()
-        price = response.xpath("//div/span[@class='buying-pricenew-val-number']/text()").extract()
+        price = response.xpath("//div/span[@class='buying-price-val-number']/text()").extract()
         fake_price = response.xpath("//div/span[@class='buying-priceold-val-number']/text()").extract()
         rate = response.xpath("//div[@id='rate']/text()").extract()
 
-        yield BookparserItem(href=href, title=title[0], authors=authors[0],
-                             price=float(price[0]), fake_price=float(fake_price[0]), rate=float(rate[0]))
+        try:
+            p = float(price[0])
+        except:
+            p = 0
+        try:
+            fp = float(fake_price[0])
+        except:
+            fp = 0
+        try:
+            r = float(rate[0])
+        except:
+            r = 0
+
+        yield BookparserItem(href=href, title=title[0], authors=authors[0], price=p, fake_price=fp, rate=r)
