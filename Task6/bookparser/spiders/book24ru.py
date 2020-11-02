@@ -26,8 +26,7 @@ class Book24ruSpider(scrapy.Spider):
 
     # ссылки на книги
     def book_parse(self, response: HtmlResponse):
-        # мы вызываем этот метод и передаём в него ссылку, но где она тут? что то не нашёл 
-        href = response.xpath("//link[@rel='amphtml']/@href").extract()
+        href = response.url
         title = response.xpath("//h1[@class='item-detail__title']/text()").extract()
         authors = response.xpath("//span/a[@class='item-tab__chars-link js-data-link']/text()").extract()
         price = response.xpath("//div/b[@itemprop='price']/text()").extract()
@@ -38,5 +37,5 @@ class Book24ruSpider(scrapy.Spider):
         except:
             r = 0
 
-        yield BookparserItem(href=href[0], title=title[0], authors=authors[0],
+        yield BookparserItem(href=href, title=title[0], authors=authors[0],
                              price=float(price[0]), fake_price=float(fake_price[0]), rate=r)
