@@ -8,5 +8,10 @@ import scrapy
 
 class InstaItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    account = scrapy.Field()
+    type = scrapy.Field()
+    user_id = scrapy.Field()
+    username = scrapy.Field()
+    full_name = scrapy.Field()
+    photo = scrapy.Field()
+    _id = scrapy.Field()
